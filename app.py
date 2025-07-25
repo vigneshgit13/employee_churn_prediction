@@ -41,12 +41,12 @@ salary = st.sidebar.selectbox("Salary Level", ['low', 'medium', 'high'])
 # Prediction
 # --------------------
 if st.button("🔮 Predict Churn"):
-    # Prepare input in correct column order
-    input_data = pd.DataFrame([[
+    # Prepare input in correct column order and names
+    input_data = pd.DataFrame([[  
         satisfaction_level,
         last_evaluation,
         number_project,
-        average_monthly_hours,
+        average_monthly_hours,  # Will map to the model-expected typo name
         time_spend_company,
         work_accident,
         promotion_last_5years,
@@ -56,7 +56,7 @@ if st.button("🔮 Predict Churn"):
         'satisfaction_level',
         'last_evaluation',
         'number_project',
-        'average_monthly_hours',
+        'average_montly_hours',  # ← Match the model's expected column name (with typo)
         'time_spend_company',
         'Work_accident',
         'promotion_last_5years',
@@ -64,8 +64,8 @@ if st.button("🔮 Predict Churn"):
         'salary'
     ])
 
-    # Use correct column indexes for categorical features (position 7, 8)
-    pool = Pool(input_data, cat_features=[7, 8])
+    # Define categorical feature positions
+    pool = Pool(input_data, cat_features=[7, 8])  # Department and salary are categorical
 
     # Predict
     try:
